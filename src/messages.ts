@@ -43,13 +43,12 @@ export const message = {
   ],
 };
 
-export const createModalView = {
+export const modalView = {
   type: 'modal',
   title: {
     type: 'plain_text',
     text: 'Create Your Daily Plan',
   },
-  blocks: [],
   submit: {
     type: 'plain_text',
     text: 'Submit',
