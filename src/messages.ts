@@ -1,66 +1,57 @@
-export const message = {
-    blocks: [
-      {
-        type: 'header',
-        text: {
-          type: 'plain_text',
-          text: 'Daily Report',
-          emoji: true,
-        },
-      },
-      {
-        type: 'section',
-        fields: [
-          {
-            type: 'mrkdwn',
-            text: '*When:*\nAug 10, 2027',
-          },
-        ],
-      },
-      {
-        type: 'actions',
-        elements: [
-          {
-            type: 'button',
-            text: {
-              type: 'plain_text',
-              emoji: true,
-              text: 'Write Daily Report',
-            },
-            style: 'primary',
-            value: 'create_button_click',
-            action_id: 'create_button',
-          },
-        ],
-      },
-      {
-        type: 'actions',
-        elements: [
-          {
-            type: 'button',
-            text: {
-              type: 'plain_text',
-              emoji: true,
-              text: `Update Today's Report`,
-            },
-            style: 'primary',
-            value: 'update_button_click',
-            action_id: 'update_button',
-          },
-        ],
-      },
-    ],
-  };
+const today = new Date();
+const formattedDate = today.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
 
-  export const modalView = {
-    type: 'modal',
-    title: {
-      type: 'plain_text',
-      text: 'Daily Report',
+export const message = {
+  blocks: [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: 'Daily Report',
+        emoji: true,
+      },
     },
-    blocks: [],
-    submit: {
-      type: 'plain_text',
-      text: 'Submit',
+    {
+      type: 'section',
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*Today's Date:*\n${formattedDate}`,
+        },
+      ],
     },
-  };
+    {
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            emoji: true,
+            text: 'Write Daily Report',
+          },
+          style: 'primary',
+          value: 'create_button_click',
+          action_id: 'create_button',
+        },
+      ],
+    }
+  ],
+};
+
+export const createModalView = {
+  type: 'modal',
+  title: {
+    type: 'plain_text',
+    text: 'Create Your Daily Plan',
+  },
+  blocks: [],
+  submit: {
+    type: 'plain_text',
+    text: 'Submit',
+  },
+};

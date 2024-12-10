@@ -73,7 +73,6 @@ export class SlackService {
 
     const newModalView = {
       ...modalView,
-      blocks: [],
       callback_id: `modal_${Date.now()}`,
     };
 

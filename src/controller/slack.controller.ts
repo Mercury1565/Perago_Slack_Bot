@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { SlackService } from '../service/slack.service';
 import { Request, Response } from 'express';
-import { message, modalView } from 'src/messages';
+import { message, createModalView } from 'src/messages';
 import { Repository } from 'typeorm';
 import { Answer } from 'src/entity/answer.entity';
 import { QuestionService } from 'src/service/question.service';
@@ -31,18 +31,15 @@ export class SlackController {
 
       // Handle block actions (button clicks)
       if (payload.type === 'block_actions') {
-        res.status(200).send('Interaction received!');
+        res.status(200).json({
+          response_action: 'clear',
+        });
 
         this.channelId = payload.channel.id;
 
         if (payload.actions[0]?.action_id === 'create_button') {
           const triggerId = payload.trigger_id;
-          this.slackService.openModal(triggerId, modalView);
-        }
-
-        else if (payload.actions[0]?.action_id === 'update_button') {
-          const triggerId = payload.trigger_id;
-          this.slackService.openModal(triggerId, modalView);
+          this.slackService.openModal(triggerId, createModalView);
         }
       } else if (payload.type === 'view_submission') {
         // Handle modal submission
@@ -57,7 +54,7 @@ export class SlackController {
             id: payload.user.id,
             username: payload.user.username,
           });
-        };
+        }
 
         questions.map((question) => {
           const answer: Partial<Answer> = {
@@ -85,15 +82,10 @@ export class SlackController {
                 type: 'plain_text',
                 text: 'You have successfully submitted your daily plan🎉',
                 emoji: true,
-              },
+              }, 
             },
           ],
         );
-
-        res.status(200).json({
-          response_action: 'clear',
-        });
-
       }
     } catch (error) {
       console.error('Error handling Slack interaction:', error.message);
