@@ -89,6 +89,11 @@ export class SlackController {
             },
           ],
         );
+
+        res.status(200).json({
+          response_action: 'clear',
+        });
+
       }
     } catch (error) {
       console.error('Error handling Slack interaction:', error.message);
